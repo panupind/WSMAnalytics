@@ -1,0 +1,109 @@
+---
+title: "OnlineShopping"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+
+data = read.csv("online_shoppers2.csv")
+view(data)
+
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+```{r}
+dim(data)
+str(data)
+head(data)
+
+```
+```{r}
+unique(data$Month)
+unique(data$VisitorType)
+```
+
+```{r}
+unique(data$Revenue)
+data$Weekend = ifelse(data$Weekend == "YES" , 1 , 0)
+data
+data$
+
+```
+
+```{r}
+
+```
+```{r}
+colnames(data)
+```
+```{r}
+data_subset = data[,  -c(11, 16,17) ]
+
+
+```
+
+
+```{r}
+library(corrplot)
+cor(data_subset)
+corrplot(cor(data_subset))
+```
+```{r}
+data$OperatingSystems = as.factor(data$OperatingSystems)
+data$Region = as.factor(data$Region)
+data$Browser = as.factor(data$Browser)
+data$TrafficType = as.factor(data$TrafficType)
+data$Revenue = as.factor(data$Revenue)
+```
+
+```{r}
+str(data)
+```
+
+```{r}
+library(dummies)
+```
+
+
+```{r}
+data_dummies = dummy.data.frame(data[,-18])
+
+dim(data_dummies)
+
+
+
+
+```
+
+
+```{r}
+data_final = cbind(data_dummies , data$Revenue)
+colnames(data_final)
+colnames(data_final)[67] = "Revenue"
+colnames(data_final)
+```
+
+
+```{r}
+logit = glm(Revenue ~ ., data = data_final,family=binomial)
+summary(logit)
+```
+
